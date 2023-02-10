@@ -28,6 +28,6 @@ const i18n = require("./i18n");
   );
 
   const fileContent = i18n.readFiles(files.map((file) => `${i18nDir}/${file}`));
-
-  console.log(i18n.diff(fileContent));
+  console.log("Difference found", i18n.diff(fileContent));
+  // console.log(i18n.diff(fileContent));
 })();
