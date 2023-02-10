@@ -1,0 +1,4 @@
+{
+  "i18nDir": "./assets/i18n",
+  "filePattern": ".json"
+}
