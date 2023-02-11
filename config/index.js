@@ -1,5 +1,5 @@
 const getDefaultConfig = require("./get-default-config");
-const loadConfig = require("./load-config");
+const parse = require("./parse");
 const configExists = require("./config-exists");
 
-module.exports = { getDefaultConfig, loadConfig, configExists };
+module.exports = { getDefaultConfig, parse, configExists };

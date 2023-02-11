@@ -10,14 +10,14 @@ const i18n = require("./i18n");
   let configFile = config.getDefaultConfig();
   if (config.configExists(CONFIG_PATH)) {
     console.info(`Configuration found.`);
-    configFile = config.loadConfig(CONFIG_PATH);
+    configFile = config.parse(CONFIG_PATH);
   } else {
     console.info("Configuration file not found. Loading default config");
   }
 
   const i18nDir = configFile.i18nDir;
   const filePattern = configFile.filePattern;
-  const files = i18n.detectI18nFiles(i18nDir, filePattern);
+  const files = i18n.getFiles(i18nDir, filePattern);
 
   if (files.length === 0) {
     console.info(`No file found, matching the pattern "${filePattern}".`);
@@ -27,7 +27,7 @@ const i18n = require("./i18n");
     files
   );
 
-  const fileContent = i18n.readFiles(files.map((file) => `${i18nDir}/${file}`));
-  console.log("Difference found", i18n.diff(fileContent));
+  const fileContent = i18n.parse(files.map((file) => `${i18nDir}/${file}`));
+  console.log("Difference found", i18n.diff(fileContent, files));
   // console.log(i18n.diff(fileContent));
 })();

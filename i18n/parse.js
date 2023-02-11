@@ -8,7 +8,7 @@ const fs = require("fs");
  *
  * @return {string[]} content - the content of the files.
  */
-module.exports = function readFiles(files) {
+module.exports = function parse(files) {
   return files.map((file) => {
     const fileContent = fs.readFileSync(file);
     return JSON.parse(fileContent);

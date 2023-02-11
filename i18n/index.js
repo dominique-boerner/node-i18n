@@ -1,5 +1,5 @@
-const detectI18nFiles = require("./detect-i18n-files");
+const getFiles = require("./get-files");
 const diff = require("./diff");
-const readFiles = require("./read-files");
+const parse = require("./parse");
 
-module.exports = { detectI18nFiles, diff, readFiles };
+module.exports = { getFiles, diff, parse };
