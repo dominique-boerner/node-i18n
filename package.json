@@ -2,8 +2,10 @@
   "name": "i18n",
   "version": "1.0.0",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "jest"
   },
   "devDependencies": {
+    "jest": "^29.4.2"
   }
 }
