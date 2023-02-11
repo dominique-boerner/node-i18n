@@ -1,5 +1,4 @@
 const { flattenObject } = require("../util");
-const util = require("util");
 
 /**
  * The diff() function takes the content of n files, and returns the difference between
