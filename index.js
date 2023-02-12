@@ -7,6 +7,7 @@ const path = require("path");
  */
 (function main() {
   const root = path.join(process.cwd());
+  console.log(root);
   const CONFIG_PATH = `${root}/i18n.config.json`;
 
   let configFile = config.getDefaultConfig();
