@@ -5,7 +5,7 @@ const i18n = require("./i18n");
  * Starting point of the application.
  */
 (function main() {
-  const CONFIG_PATH = "./i18n.config.json";
+  const CONFIG_PATH = `${__dirname}/i18n.config.json`;
 
   let configFile = config.getDefaultConfig();
   if (config.configExists(CONFIG_PATH)) {
@@ -21,7 +21,7 @@ const i18n = require("./i18n");
     );
   }
 
-  const i18nDir = configFile.i18nDir;
+  const i18nDir = `${__dirname}/${configFile.i18nDir}`;
   const filePattern = configFile.filePattern;
   const files = i18n.getFiles(i18nDir, filePattern);
 
