@@ -30,6 +30,7 @@ const i18n = require("./i18n");
       "\x1b[31m%s",
       `ERROR: No file found, matching the pattern "${filePattern}".`
     );
+    return;
   }
   console.info(
     "\x1b[34m%s",

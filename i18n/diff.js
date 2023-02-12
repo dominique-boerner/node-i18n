@@ -31,12 +31,12 @@ module.exports = function diff(fileContents, i18nFiles) {
     delete buffersCopy[index];
 
     buffersCopy.forEach((bufferCopy, index2) => {
-      if (buffer.compare(bufferCopy) !== 0) {
+      if (buffer.compare(bufferCopy) > 0) {
         console.log(
           "\x1b[31m%s - \x1b[31m%s",
           `ERROR: ${i18nFiles[index]}`,
           buffer.toString(),
-          "is not equal to",
+          "is missing keys of",
           i18nFiles[index2],
           bufferCopy.toString()
         );
