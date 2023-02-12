@@ -1,11 +1,13 @@
 const config = require("./config");
 const i18n = require("./i18n");
+const path = require("path");
 
 /**
  * Starting point of the application.
  */
 (function main() {
-  const CONFIG_PATH = `${__dirname}/i18n.config.json`;
+  const root = path.join(process.cwd());
+  const CONFIG_PATH = `${root}/i18n.config.json`;
 
   let configFile = config.getDefaultConfig();
   if (config.configExists(CONFIG_PATH)) {
@@ -21,7 +23,7 @@ const i18n = require("./i18n");
     );
   }
 
-  const i18nDir = `${__dirname}/${configFile.i18nDir}`;
+  const i18nDir = `${root}/${configFile.i18nDir}`;
   const filePattern = configFile.filePattern;
   const files = i18n.getFiles(i18nDir, filePattern);
 
@@ -41,5 +43,4 @@ const i18n = require("./i18n");
 
   console.info("\x1b[34m%s", "INFO: Files are being analysed, please wait...");
   i18n.diff(fileContent, files);
-  // console.log(i18n.diff(fileContent));
 })();
