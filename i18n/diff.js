@@ -10,7 +10,6 @@ const { flattenObject } = require("../util");
  */
 module.exports = function diff(fileContents, i18nFiles) {
   let languages = new Set();
-  // TODO: WIP
   const flattenedObjectKeys = fileContents.map((content) => {
     return Object.keys(flattenObject(content));
   });
@@ -34,7 +33,8 @@ module.exports = function diff(fileContents, i18nFiles) {
     buffersCopy.forEach((bufferCopy, index2) => {
       if (buffer.compare(bufferCopy) !== 0) {
         console.log(
-          i18nFiles[index],
+          "\x1b[31m%s - \x1b[31m%s",
+          `ERROR: ${i18nFiles[index]}`,
           buffer.toString(),
           "is not equal to",
           i18nFiles[index2],
@@ -44,6 +44,4 @@ module.exports = function diff(fileContents, i18nFiles) {
       }
     });
   });
-
-  return [...compared];
 };
