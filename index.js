@@ -6,7 +6,7 @@ const path = require("path");
  * Starting point of the application.
  */
 (function main() {
-  const root = path.join(__dirname, "../../../");
+  const root = path.join(__dirname, "../../");
   console.log("", root);
   const CONFIG_PATH = `${root}/i18n.config.json`;
 
