@@ -44,4 +44,8 @@ module.exports = function diff(fileContents, i18nFiles) {
       }
     });
   });
+
+  if (compared.size === 0) {
+    console.log("\x1b[32m%s", "SUCCESS: Language files contain the same keys.");
+  }
 };
