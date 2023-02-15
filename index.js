@@ -1,13 +1,13 @@
 const config = require("./config");
 const i18n = require("./i18n");
 const path = require("path");
+const fs = require("fs");
 
 /**
  * Starting point of the application.
  */
 (function main() {
-  const root = path.join(__dirname, "../../");
-  console.log("", root);
+  const root = getAppRootDir();
   const CONFIG_PATH = `${root}/i18n.config.json`;
 
   let configFile = config.getDefaultConfig();
@@ -45,3 +45,11 @@ const path = require("path");
   console.info("\x1b[34m%s", "INFO: Files are being analysed, please wait...");
   i18n.diff(fileContent, files);
 })();
+
+function getAppRootDir() {
+  let currentDir = __dirname;
+  while (!fs.existsSync(path.join(currentDir, "package.json"))) {
+    currentDir = path.join(currentDir, "..");
+  }
+  return currentDir;
+}
