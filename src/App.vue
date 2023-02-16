@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
 import { ref } from "vue";
+import { navigateToExternal } from "@/util/navigation";
+import { getLocalStorage, setLocalStorage } from "@/util/local-storage";
 
-const isFirstTime = ref(true);
+const GITHUB_PROJECT_URL = "https://github.com/dominique-boerner/node-i18n";
+const FIRST_TIME_STORAGE_KEY = "first_time";
 
-function navigateToGitHub() {
-  const GITHUB_PROJECT_URL = "https://github.com/dominique-boerner/node-i18n";
-  window.open(GITHUB_PROJECT_URL, "_blank");
-}
-
-function dismissBanner() {
-  isFirstTime.value = false;
-}
+const isFirstTime = ref(getLocalStorage(FIRST_TIME_STORAGE_KEY, true));
 </script>
 
 <template>
@@ -25,8 +21,16 @@ function dismissBanner() {
       be afraid to give feedback on GitHub.
 
       <template v-slot:action>
-        <q-btn flat label="GitHub" @click="navigateToGitHub()" />
-        <q-btn flat label="I Understand" @click="dismissBanner()" />
+        <q-btn
+          flat
+          label="GitHub"
+          @click="navigateToExternal(GITHUB_PROJECT_URL, true)"
+        />
+        <q-btn
+          flat
+          label="I Understand"
+          @click="setLocalStorage(FIRST_TIME_STORAGE_KEY, false)"
+        />
       </template>
     </q-banner>
   </header>
