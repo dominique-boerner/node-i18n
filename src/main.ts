@@ -15,13 +15,13 @@ import "quasar/src/css/index.sass";
 // and placed in same folder as main.js
 import App from "./App.vue";
 
-const myApp = createApp(App);
-myApp.use(router);
+const app = createApp(App);
+app.use(router);
 
-myApp.use(Quasar, {
+app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
   lang: quasarLang,
 });
 
 // Assumes you have a <div id="app"></div> in your index.html
-myApp.mount("#app");
+app.mount("#app");

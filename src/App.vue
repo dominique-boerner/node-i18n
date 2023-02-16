@@ -2,16 +2,26 @@
 import { RouterView } from "vue-router";
 import { navigateToExternal } from "@/util/navigation";
 import { useLocalStorage } from "vue-composable";
-import { ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { useSocketIO } from "@/hooks/useSocketIO";
 
 const GITHUB_PROJECT_URL = "https://github.com/dominique-boerner/node-i18n";
 const firstTimeStoryKey = "first_time";
 
+const { socket } = useSocketIO();
 const tabSync = ref(false);
 const { supported, storage, setSync } = useLocalStorage<boolean>(
   firstTimeStoryKey,
   true
 );
+
+onMounted(() => {
+  socket.emit("getFiles");
+
+  socket.on("sendFiles", (res: any) => {
+    console.log(res);
+  });
+});
 
 watch(tabSync, setSync);
 </script>
