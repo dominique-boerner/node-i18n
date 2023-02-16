@@ -10,8 +10,6 @@ const port = process.env.PORT || 3000;
 
 const config = configControllerInstance.getConfig();
 
-console.log(config);
-
 server.listen(port, function () {
   console.log("Server runs on port %d", port);
 });

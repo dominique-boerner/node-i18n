@@ -7,7 +7,7 @@
     "start:electron": "electron",
     "start:server": "nodemon server.js",
     "test": "jest",
-    "dev": "vite",
+    "dev": "concurrently --kill-others \"vite\" \"npm run start:server\"",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root ../src/",

@@ -1,7 +1,32 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
+
+import { useSocketIO } from "@/hooks/useSocketIO";
+
+const { socket } = useSocketIO();
+const files = ref<string[]>([]);
+const selectedFile = ref<string>();
+
+onMounted(() => {
+  socket.emit("getFiles");
+
+  socket.on("sendFiles", (res: string[]) => {
+    files.value = res;
+  });
+});
+</script>
 
 <template>
   <section>
-    <h1 class="text-h2">i18nStudio</h1>
+    <q-select
+      filled
+      v-model="selectedFile"
+      :options="files"
+      :label="`${files.length} translations found`"
+    >
+      <template v-slot:prepend>
+        <q-icon name="language" />
+      </template>
+    </q-select>
   </section>
 </template>
