@@ -1,14 +1,11 @@
 const express = require("express");
-const fileControllerInstance = require("./service/file.service");
-const configControllerInstance = require("./service/config.service");
+const fileControllerInstance = require("./service/i18n.service");
 const app = express();
 const server = require("http").createServer(app);
 
 const io = require("socket.io")(server, { cors: { origin: "*" } });
 
 const port = process.env.PORT || 3000;
-
-const config = configControllerInstance.getConfig();
 
 server.listen(port, function () {
   console.log("Server runs on port %d", port);
