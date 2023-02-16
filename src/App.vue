@@ -4,6 +4,7 @@ import { navigateToExternal } from "@/util/navigation";
 import { useLocalStorage } from "vue-composable";
 import { onMounted, ref, watch } from "vue";
 import { useSocketIO } from "@/hooks/useSocketIO";
+import Bar from "@/components/Bar.vue";
 
 const GITHUB_PROJECT_URL = "https://github.com/dominique-boerner/node-i18n";
 const firstTimeStoryKey = "first_time";
@@ -15,11 +16,14 @@ const { supported, storage, setSync } = useLocalStorage<boolean>(
   true
 );
 
+const files = ref<string[]>([]);
+const selectedFile = ref<string>();
+
 onMounted(() => {
   socket.emit("getFiles");
 
-  socket.on("sendFiles", (res: any) => {
-    console.log(res);
+  socket.on("sendFiles", (res: string[]) => {
+    files.value = res;
   });
 });
 
@@ -28,6 +32,7 @@ watch(tabSync, setSync);
 
 <template>
   <header class="window-width">
+    <Bar />
     <q-banner
       v-if="storage"
       inline-actions
@@ -45,6 +50,16 @@ watch(tabSync, setSync);
         <q-btn flat label="I Understand" @click="storage = false" />
       </template>
     </q-banner>
+    <q-select
+      filled
+      v-model="selectedFile"
+      :options="files"
+      :label="`${files.length} files found`"
+    >
+      <template v-slot:prepend>
+        <q-icon name="language" />
+      </template>
+    </q-select>
   </header>
 
   <main class="content">

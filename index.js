@@ -1,28 +1,15 @@
-const config = require("./config");
 const i18n = require("./i18n");
 const path = require("path");
 const fs = require("fs");
+const configControllerInstance = require("./service/config.service");
+const directoryServiceInstance = require("./service/directory.service");
 
 /**
  * Starting point of the application.
  */
 (function main() {
-  const root = getAppRootDir();
-  const CONFIG_PATH = `${root}/i18n.config.json`;
-
-  let configFile = config.getDefaultConfig();
-  if (config.configExists(CONFIG_PATH)) {
-    console.info(
-      "\x1b[34m%s",
-      "INFO: Configuration file was found. Configuration file is used for analysis."
-    );
-    configFile = config.parse(CONFIG_PATH);
-  } else {
-    console.info(
-      "\x1b[34m%s",
-      "INFO: Configuration file not found. Loading default config"
-    );
-  }
+  const root = directoryServiceInstance.getAppRootDir();
+  let configFile = configControllerInstance.getConfig();
 
   const i18nDir = `${root}/${configFile.i18nDir}`;
   const filePattern = configFile.filePattern;

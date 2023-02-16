@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>Home</main>
+  <section>
+    <h1 class="text-h2">i18nStudio</h1>
+  </section>
 </template>

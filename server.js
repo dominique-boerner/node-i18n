@@ -1,11 +1,16 @@
 const express = require("express");
-const i18n = require("./i18n");
+const fileControllerInstance = require("./service/file.service");
+const configControllerInstance = require("./service/config.service");
 const app = express();
 const server = require("http").createServer(app);
 
 const io = require("socket.io")(server, { cors: { origin: "*" } });
 
 const port = process.env.PORT || 3000;
+
+const config = configControllerInstance.getConfig();
+
+console.log(config);
 
 server.listen(port, function () {
   console.log("Server runs on port %d", port);
@@ -19,6 +24,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("getFiles", () => {
-    socket.emit("sendFiles", []);
+    socket.emit("sendFiles", fileControllerInstance.getFiles());
   });
 });

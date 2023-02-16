@@ -11,8 +11,6 @@ import "@quasar/extras/material-icons-round/material-icons-round.css";
 // Import Quasar css
 import "quasar/src/css/index.sass";
 
-// Assumes your root component is App.vue
-// and placed in same folder as main.js
 import App from "./App.vue";
 
 const app = createApp(App);
@@ -23,5 +21,4 @@ app.use(Quasar, {
   lang: quasarLang,
 });
 
-// Assumes you have a <div id="app"></div> in your index.html
 app.mount("#app");
