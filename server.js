@@ -1,5 +1,5 @@
 const express = require("express");
-const fileControllerInstance = require("./service/i18n.service");
+const i18nServiceInstance = require("./service/i18n.service");
 const app = express();
 const server = require("http").createServer(app);
 
@@ -19,6 +19,12 @@ io.on("connection", (socket) => {
   });
 
   socket.on("getFiles", () => {
-    socket.emit("sendFiles", fileControllerInstance.getFiles());
+    socket.emit("sendFiles", i18nServiceInstance.getFiles());
+  });
+
+  socket.on("getFileContent", (args) => {
+    const file = args.file;
+    console.log(args);
+    socket.emit("sendFileContent", i18nServiceInstance.getContentOfFile(file));
   });
 });

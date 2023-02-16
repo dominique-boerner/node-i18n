@@ -9,6 +9,10 @@ class I18nService {
   configService = configServiceInstance;
   directoryService = directoryServiceInstance;
 
+  basePath = `${this.directoryService.getAppRootDir()}/${
+    this.configService.getConfig().i18nDir
+  }`;
+
   /**
    * Returns the names of every i18n file.
    *
@@ -26,15 +30,13 @@ class I18nService {
 
   getContentOfFiles(files) {
     return files.map((file) => {
-      const path = `${this.directoryService.getAppRootDir()}/${
-        this.configService.getConfig().i18nDir
-      }/${file}`;
-      return this.getContentOfFile(path);
+      return this.getContentOfFile(file);
     });
   }
 
   getContentOfFile(file) {
-    const fileContent = fs.readFileSync(file).toString();
+    const path = `${this.basePath}/${file}`;
+    const fileContent = fs.readFileSync(path).toString();
     return JSON.parse(fileContent);
   }
 }
