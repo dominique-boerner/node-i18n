@@ -18,9 +18,11 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.15.11",
+    "@vue/composition-api": "^1.7.1",
     "pinia": "^2.0.28",
     "quasar": "^2.11.6",
     "vue": "^3.2.45",
+    "vue-composable": "^1.0.0-beta.24",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

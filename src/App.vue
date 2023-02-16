@@ -1,23 +1,29 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
-import { ref } from "vue";
 import { navigateToExternal } from "@/util/navigation";
-import { getLocalStorage, setLocalStorage } from "@/util/local-storage";
+import { useLocalStorage } from "vue-composable";
+import { ref, watch } from "vue";
 
 const GITHUB_PROJECT_URL = "https://github.com/dominique-boerner/node-i18n";
-const FIRST_TIME_STORAGE_KEY = "first_time";
+const firstTimeStoryKey = "first_time";
 
-const isFirstTime = ref(getLocalStorage(FIRST_TIME_STORAGE_KEY, true));
+const tabSync = ref(false);
+const { supported, storage, setSync } = useLocalStorage<boolean>(
+  firstTimeStoryKey,
+  true
+);
+
+watch(tabSync, setSync);
 </script>
 
 <template>
   <header class="window-width">
     <q-banner
-      v-if="isFirstTime"
+      v-if="storage"
       inline-actions
       class="bg-primary text-white window-width"
     >
-      Thank you for using i18n-studio! This project is currently a WIP, so don't
+      Thank you for using i18n Studio! This project is currently a WIP, so don't
       be afraid to give feedback on GitHub.
 
       <template v-slot:action>
@@ -26,14 +32,18 @@ const isFirstTime = ref(getLocalStorage(FIRST_TIME_STORAGE_KEY, true));
           label="GitHub"
           @click="navigateToExternal(GITHUB_PROJECT_URL, true)"
         />
-        <q-btn
-          flat
-          label="I Understand"
-          @click="setLocalStorage(FIRST_TIME_STORAGE_KEY, false)"
-        />
+        <q-btn flat label="I Understand" @click="storage = false" />
       </template>
     </q-banner>
   </header>
 
-  <RouterView />
+  <main class="content">
+    <RouterView />
+  </main>
 </template>
+
+<style scoped>
+.content {
+  padding: 0.5rem;
+}
+</style>
