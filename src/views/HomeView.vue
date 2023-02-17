@@ -33,22 +33,33 @@ const nodeClick = (node: any) => {
 
 <template>
   <section>
-    <q-select
-      filled
-      v-model="selectedFile"
-      :options="files"
-      :label="`${files.length} translations found`"
-      @update:modelValue="getTranslation($event)"
-    >
-      <template v-slot:prepend>
-        <q-icon name="language" />
-      </template>
-    </q-select>
+    <q-card>
+      <q-card-section>
+        <div class="row justify-between">
+          <q-select
+            v-model="selectedFile"
+            :options="files"
+            :label="`${files.length} translations found`"
+            @update:modelValue="getTranslation($event)"
+            style="width: 300px"
+          >
+            <template v-slot:prepend>
+              <q-icon name="language" />
+            </template>
+          </q-select>
+          <q-btn primary color="primary" label="add translation" icon="add">
+            <q-tooltip
+              >Add a new translation to your translation files.</q-tooltip
+            >
+          </q-btn>
+        </div>
+      </q-card-section>
+    </q-card>
   </section>
   <section>
     <article v-if="fileContent">
       <h1 class="text-h5">{{ selectedFile }}</h1>
-      <q-card class="my-card">
+      <q-card>
         <q-card-section>
           <vue-json-pretty
             :data="fileContent"
@@ -56,19 +67,36 @@ const nodeClick = (node: any) => {
             @nodeClick="nodeClick($event)"
           >
             <template #renderNodeKey="{ node, defaultKey }">
-              <span class="text-grey-9 text-weight-bolder">{{
-                defaultKey
-              }}</span>
+              <span class="text-grey-9 text-bold">{{ defaultKey }}</span>
             </template>
             <template #renderNodeValue="{ node, defaultValue }">
-              <span class="text-primary">{{ defaultValue }}</span>
+              <span class="text-secondary text-bolder">{{ defaultValue }}</span>
             </template>
           </vue-json-pretty>
         </q-card-section>
       </q-card>
     </article>
-    <article v-if="!fileContent">
-      <h2 class="text-h4 text-grey-9">Please select the i18n file to view.</h2>
+    <article class="empty-state" v-if="!fileContent">
+      <img
+        class="translate-icon"
+        src="@/assets/img/language.png"
+        alt="translation"
+      />
+      <h2 class="text-h5 text-grey-9">Please select the i18n file to view.</h2>
     </article>
   </section>
 </template>
+
+<style scoped lang="scss">
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 500px;
+
+  .translate-icon {
+    width: 200px;
+  }
+}
+</style>
