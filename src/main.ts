@@ -7,6 +7,7 @@ import quasarLang from "quasar/lang/de";
 // Import icon libraries
 import "@quasar/extras/material-icons/material-icons.css";
 import "@quasar/extras/material-icons-round/material-icons-round.css";
+import "vue-json-pretty/lib/styles.css";
 
 // Import Quasar css
 import "quasar/src/css/index.sass";
