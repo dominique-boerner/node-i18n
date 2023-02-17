@@ -47,10 +47,13 @@ const nodeClick = (node: any) => {
               <q-icon name="language" />
             </template>
           </q-select>
-          <q-btn primary color="primary" label="add translation" icon="add">
-            <q-tooltip
-              >Add a new translation to your translation files.</q-tooltip
-            >
+          <q-btn
+            v-if="fileContent"
+            primary
+            color="primary"
+            label="add translation"
+            icon="add"
+          >
           </q-btn>
         </div>
       </q-card-section>
