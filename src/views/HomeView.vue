@@ -4,11 +4,16 @@ import { onMounted, ref } from "vue";
 import { useSocketIO } from "@/hooks/useSocketIO";
 
 import VueJsonPretty from "vue-json-pretty";
+import internal from "stream";
 
 const { socket } = useSocketIO();
 const files = ref<string[]>([]);
 const selectedFile = ref<string>();
 const fileContent = ref<object | null>(null);
+
+interface I18nFile {
+  [key: string]: string;
+}
 
 onMounted(() => {
   socket.emit("getFiles");
@@ -26,8 +31,26 @@ const getTranslation = (file: string) => {
   socket.emit("getFileContent", { file });
 };
 
-const nodeClick = (node: any) => {
-  console.log(node);
+const createTreeNode = (object: any): any => {
+  return Object.keys(object).map((value: string) => {
+    if (typeof object[value] === "object") {
+      return {
+        label: value,
+        children: createTreeNode(object[value]),
+      };
+    }
+    return { label: value };
+  });
+};
+
+const generateTree = (content: I18nFile) => {
+  return [
+    {
+      label: selectedFile.value,
+      header: "root",
+      children: createTreeNode(content),
+    },
+  ];
 };
 </script>
 
@@ -64,11 +87,7 @@ const nodeClick = (node: any) => {
       <h1 class="text-h5">{{ selectedFile }}</h1>
       <q-card>
         <q-card-section>
-          <vue-json-pretty
-            :data="fileContent"
-            :showLineNumber="true"
-            @nodeClick="nodeClick($event)"
-          >
+          <vue-json-pretty :data="fileContent" :showLineNumber="true">
             <template #renderNodeKey="{ node, defaultKey }">
               <span class="text-grey-9 text-bold">{{ defaultKey }}</span>
             </template>
@@ -78,6 +97,26 @@ const nodeClick = (node: any) => {
           </vue-json-pretty>
         </q-card-section>
       </q-card>
+
+      <q-tree
+        :accordion="true"
+        :default-expand-all="true"
+        :nodes="generateTree(fileContent)"
+        node-key="label"
+      >
+        <template v-slot:header-root="prop">
+          <div class="row items-center">
+            <h2 class="text-h4">
+              {{ prop.node.label }}
+            </h2>
+          </div>
+        </template>
+        <template v-slot:default-header="prop">
+          <div v-if="prop.node.header !== 'root' && !prop.node.children">
+            <q-input filled :label="prop.node.label"></q-input>
+          </div>
+        </template>
+      </q-tree>
     </article>
     <article class="empty-state" v-if="!fileContent">
       <img
